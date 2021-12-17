@@ -43,6 +43,16 @@ public class ProjectController {
         return model;
     }
 
+
+    @RequestMapping(value="/list2", method = RequestMethod.GET)
+    public ModelAndView list2() {
+        ModelAndView model = new ModelAndView("project_list2");
+        List<Project> projectList = projectService.getAllProjects();
+        model.addObject("projectList2", projectList);
+
+        return model;
+    }
+
     @RequestMapping(value="/addProject/", method=RequestMethod.GET)
     public ModelAndView addProject() {
 

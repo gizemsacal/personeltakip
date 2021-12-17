@@ -72,7 +72,8 @@ public class LoginController {
             return new ModelAndView("redirect:/employee_login");
         }
         else
-            return new ModelAndView("redirect:/employee/list");
+            return new ModelAndView("redirect:/department/list2");
+        //    return new ModelAndView("redirect:/employee/list");
     }
 
     private User getUserEmployee(User user){

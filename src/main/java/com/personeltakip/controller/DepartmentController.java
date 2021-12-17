@@ -23,6 +23,14 @@ public class DepartmentController {
         return model;
     }
 
+    @RequestMapping(value="/list2", method = RequestMethod.GET)
+    public ModelAndView list2() {
+        ModelAndView model = new ModelAndView("department_list2");
+        List<Department> departmentList = departmentService.getAllDepartments();
+        model.addObject("departmentList2", departmentList);
+        return model;
+    }
+
     @RequestMapping(value="/addDepartment/", method=RequestMethod.GET)
     public ModelAndView addDepartment() {
 
