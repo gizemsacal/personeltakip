@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,13 +61,15 @@ public class LoginController {
 
     @RequestMapping(value="/employee_login", method=RequestMethod.POST)
 
-    public ModelAndView employeeGirisKontrol(HttpSession request, @ModelAttribute("user") User user){
+    public ModelAndView employeeGirisKontrol(HttpServletResponse response, HttpSession request, @ModelAttribute("user") User user){
 
         User user2 = getUserEmployee(user);
         request.setAttribute("user", user2);
 
         if (user2 != null){
             Employee employee = getEmployee(user2.getId());
+            response.addCookie(new Cookie("employeeUsername",user2.getUsername()));
+            response.addCookie(new Cookie("employeePassword",user2.getPassword()));
             request.setAttribute("employee", employee);
         }
 
@@ -114,7 +119,7 @@ public class LoginController {
 
     @RequestMapping(value="/manager_login", method=RequestMethod.POST)
 
-    public ModelAndView managerGirisKontrol(HttpSession request, @ModelAttribute("user") User user, @ModelAttribute("user") Manager manager){
+    public ModelAndView managerGirisKontrol(HttpServletResponse response,HttpSession request, @ModelAttribute("user") User user, @ModelAttribute("user") Manager manager){
 
         for (User user2: userService.getAllUsers())
         {
@@ -131,6 +136,8 @@ public class LoginController {
 
                     request.setAttribute("user", user2);
                     request.setAttribute("manager", manager2);
+                    response.addCookie(new Cookie("managerUsername",user2.getUsername()));
+                    response.addCookie(new Cookie("managerPassword",user2.getPassword()));
                     return new ModelAndView("redirect:/user/list");
 
                 }
